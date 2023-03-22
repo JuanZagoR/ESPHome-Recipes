@@ -1,8 +1,13 @@
 ###### Device name ######
 esphome:
   name: esp32-dev-template
+  comment: ESP32 YAML Template
   friendly_name: esp32-dev-template
-  
+ ### Project info ###  
+  project:
+    name: "JuanZagoR.ESP32DevTemplate"
+    version: "1.0-Beta"
+
 ###### Dev board and platform ######
 esp32:
   board: esp32dev
