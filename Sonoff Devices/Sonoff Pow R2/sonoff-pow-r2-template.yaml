@@ -8,31 +8,32 @@
 ##    .P@@@@@@@@@@@@@@@@@@#~   |___|___/_| |_||_\___/_|_|_\___|   |_|_\___\__|_| .__/\___/__/     ##
 ##     ::B@@@@@@@@@@@@@@@!:.    Ready to use ESP32/8266 Templates for ESPHome  |_|                ##
 ##       B@@@@@@@@@@@@@@@^                                                                        ##
-##       G@&&&&&&&&&&&&&&^      Board:   ESP8266 Template (ESP8266)                               ##
+##       G@&&&&&&&&&&&&&&^      Board:   Sonoff Pow R2 (ESP8266)                                  ##
 ##       .::::::::::::::.       Version: 1.0-Beta                                                 ##
 ##                                                                                                ##
 ####################################################################################################
 
 ###### Device name ######
 esphome:
-  name: esp8266-dev-template
-  comment: ESP8266 YAML Template
-  friendly_name: esp8266-dev-template
+  name: sonoff-pow-r2-template
+  comment: Sonoff Pow R2 Template
+  friendly_name: sonoff-pow-r2-template
  ### Project info ###  
   project:
-    name: "JuanZagoR.ESP8266DevTemplate"
+    name: "JuanZagoR.SonoffPowR2Template"
     version: "1.0-Beta"
 
 ###### Dev board and platform ######
 esp8266:
-  board: nodemcuv2
+  board: sonoff_basic
 
 
 
 
 ###### Data logger ######
 logger:
-    level: VERBOSE
+  baud_rate: 0
+  level: VERBOSE
   
 ###### Home Assistant's Native API Config ######
 api:
@@ -85,7 +86,7 @@ wifi:
   
 ###### Access Point and Captive Portal Config ######
   ap:
-    ssid: "esp8266-dev-kit-template"
+    ssid: "sonoff-pow-r2"
     password: !secret ap_password
   
 captive_portal:
@@ -94,25 +95,61 @@ captive_portal:
 
 
 ###### 'Ports' Config ######
+  ### Status LED ###
+status_led:
+  pin: GPIO13
+
+  ### UART Bus (Required to retrieve data from CSE7766) ###
+uart:
+  rx_pin: RX
+  baud_rate: 4800
 
 
 
-  ####### Sensors #######
+
+
+####### Sensors #######
+
+  ### Binary Sensor (built-in button) ###
+binary_sensor:
+ - platform: gpio
+   pin:
+     number: GPIO0
+     mode:
+      input: true
+      pullup: true
+     inverted: true
+   name: "Sonoff Pow R2 Button"
+   on_press:
+    - switch.toggle: relay
+ - platform: status
+   name: "Sonoff Pow R2 Status"
+
 sensor:
+  ### CSE7766 UART Serial Meter ###
+ - platform: cse7766
+   current:
+     name: "Sonoff Pow R2 Current"
+   voltage:
+     name: "Sonoff Pow R2 Voltage"
+   power:
+     name: "Sonoff Pow R2 Power"
+   energy:
+     name: "Sonoff Pow R2 Energy"
+   update_interval: 300ms
 
-### Dallas Temperature Sensors ###
-#  - platform: dallas
-#    address: 0x373c01f095e27428
-#    name: "Sensor 1"
-#    id: sondatemperatura1
-
-### Home Assistant Entities (through Native API) ###
-  - platform: homeassistant
-    id: home_assistant_entity_id
-    entity_id: sensor.entity
+  ### Home Assistant Entities (through Native API) ###
+ - platform: homeassistant
+   id: home_assistant_entity_id
+   entity_id: sensor.entity
 #    attribute: current_power
   
 
 
-
-###### Screen (If needed) ######
+switch:
+  ### Built-in Relay ###
+  - platform: gpio
+    pin: GPIO12
+    name: "Sonoff Pow R2 Relay"
+    id: relay
+    restore_mode: ALWAYS_ON
