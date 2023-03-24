@@ -1,20 +1,17 @@
 ###### Device name ######
 esphome:
   name: esp8266-dev-template
-  comment: ESP32 YAML Template
+  comment: ESP8266 YAML Template
   friendly_name: esp8266-dev-template
  ### Project info ###  
   project:
-    name: "JuanZagoR.ESP32DevTemplate"
+    name: "JuanZagoR.ESP8266DevTemplate"
     version: "1.0-Beta"
 
 ###### Dev board and platform ######
-esp32:
-  board: esp32dev
-  framework:
-    type: arduino
-    version: latest
-  
+esp8266:
+  board: nodemcuv2
+
 
 
 
@@ -83,15 +80,6 @@ captive_portal:
 
 ###### 'Ports' Config ######
 
-### ST7735 TFT Screen ###
-spi:
-    clk_pin: GPIO18
-    mosi_pin: GPIO23
-
-dallas:
-  - pin: GPIO22
-    update_interval: 1s
-  
 
 
   ####### Sensors #######
@@ -106,48 +94,10 @@ sensor:
 ### Home Assistant Entities (through Native API) ###
   - platform: homeassistant
     id: home_assistant_entity_id
-    entity_id: sensor.sonoff_pow_r2_power
+    entity_id: sensor.entity
 #    attribute: current_power
   
 
 
 
 ###### Screen (If needed) ######
-
-### Fonts, Graphs and Colors ###
-font:
-    - file: "gfonts://Roboto"
-      id: roboto
-      size: 15
-  
-    - file: "gfonts://Roboto"
-      id: roboto_big
-      size: 35
-
-###### ST7735 TFT Display Config (also check SPI pinout) ######
-display:
-    - platform: st7735
-      model: "INITR_BLACKTAB"
-      reset_pin: GPIO4
-      cs_pin: GPIO5
-      dc_pin: GPIO2
-      rotation: 270
-      device_width: 128
-      device_height: 160
-      col_start: 0
-      row_start: 0
-      eight_bit_color: True
-      update_interval: 1000ms
-
-      ###### Screen content ######
-      lambda: |-
-        it.print(15, 5, id(roboto), "Consumo de Casa");
-        it.printf(25, 50, id(roboto_big), "%.1f W", id(home_assistant_entity_id).state);
-
-
-
-  #    lambda: |-
-  #      // Write some text
-  #      it.print(0, 0, id(roboto), "Wena perro, pantalla funcionando");
-  #      // Draw a circle in the middle of the display
-  #      it.filled_circle(it.get_width() / 2, it.get_height() / 2, 20);
