@@ -2,7 +2,7 @@
 ##                                                                                                ##
 ##              .:                                                                                ##
 ##            :J#&5^                                                                              ##
-##         :Y&@@@@@P!5GP:       ___ ___ ___ _  _                   ___        _                   ## 
+##         :Y&@@@@@P!5GP:       ___ ___ ___ _  _                   ___        _                   ##
 ##       ^5&@@@@@@@@@@@@^      | __/ __| _ \ || |___ _ __  ___ ___| _ \___ __(_)_ __  ___ ___     ##
 ##      ~P@@@@@@@@@@@@@@@J.    | _|\__ \  _/ __ / _ \ '  \/ -_)___|   / -_) _| | '_ \/ -_|_-<     ##
 ##    .P@@@@@@@@@@@@@@@@@@#~   |___|___/_| |_||_\___/_|_|_\___|   |_|_\___\__|_| .__/\___/__/     ##
@@ -29,7 +29,7 @@ esp32:
   framework:
     type: arduino
     version: latest
-  
+
 
 
 
@@ -54,6 +54,7 @@ mqtt:
   
 ###### Over-the-Air Updates ######
 ota:
+  safe_mode: true
   password: !secret ota_password
 
 
@@ -98,7 +99,7 @@ captive_portal:
 
 ###### 'Ports' Config ######
 
-### ST7735 TFT Screen ###
+ ### ST7735 TFT Screen ###
 spi:
     clk_pin: GPIO18
     mosi_pin: GPIO23
@@ -109,7 +110,7 @@ dallas:
   
 
 
-  ####### Sensors #######
+####### Sensors #######
 sensor:
 
 ### Dallas Temperature Sensors ###
