@@ -1,0 +1,124 @@
+####################################################################################################
+##                                                                                                ##
+##              .:                                                                                ##
+##            :J#&5^                                                                              ##
+##         :Y&@@@@@P!5GP:       ___ ___ ___ _  _                   ___        _                   ##
+##       ^5&@@@@@@@@@@@@^      | __/ __| _ \ || |___ _ __  ___ ___| _ \___ __(_)_ __  ___ ___     ##
+##      ~P@@@@@@@@@@@@@@@J.    | _|\__ \  _/ __ / _ \ '  \/ -_)___|   / -_) _| | '_ \/ -_|_-<     ##
+##    .P@@@@@@@@@@@@@@@@@@#~   |___|___/_| |_||_\___/_|_|_\___|   |_|_\___\__|_| .__/\___/__/     ##
+##     ::B@@@@@@@@@@@@@@@!:.    Ready to use ESP32/8266 Templates for ESPHome  |_|                ##
+##       B@@@@@@@@@@@@@@@^                                                                        ##
+##       G@&&&&&&&&&&&&&&^      Board:   ESP8266 Thermocouple Template (ESP8266)                  ##
+##       .::::::::::::::.       Version: 1.0-Beta                                                 ##
+##                                                                                                ##
+####################################################################################################
+
+###### Device name ######
+esphome:
+  name: esp8266-thermocouple-template
+  comment: ESP8266 board with thermocouple
+  friendly_name: esp8266-thermocouple-template
+ ### Project info ###  
+  project:
+    name: "JuanZagoR.ESP8266ThermocoupleTemplate"
+    version: "1.0-Beta"
+
+###### Dev board and platform ######
+esp8266:
+  board: nodemcuv2
+
+
+
+
+###### Data logger ######
+logger:
+    level: VERBOSE
+  
+###### Home Assistant's Native API Config ######
+api:
+  encryption:
+    key: !secret api_password
+  
+###### MQTT Broker Config ######
+mqtt:
+  discovery: false
+  broker: !secret mqtt_broker
+  port: !secret mqtt_brokerport
+#  keepalive: 5s
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  discovery_prefix: homeassistant
+  
+###### Over-the-Air Updates ######
+ota:
+  safe_mode: true
+  password: !secret ota_password
+
+
+
+
+###### Network Config ######
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      bssid: !secret wifi_bssid
+      password: !secret wifi_password
+
+    - ssid: !secret wifi_ssid2
+      bssid: !secret wifi_bssid2
+      password: !secret wifi_password2
+
+    - ssid: !secret wifi_ssid3
+      bssid: !secret wifi_bssid3
+      password: !secret wifi_password3
+
+      #### Static IP Address ####
+   # manual_ip:
+   #   static_ip: 192.168.254.170
+   #   gateway: 192.168.254.1
+   #   subnet: 255.255.128.0
+   #   dns1: 192.168.254.4
+   #   dns2: 192.168.254.1
+
+      #### Other settings ####
+  #  fast_connect: on
+  #  power_save_mode: none
+  
+###### Access Point and Captive Portal Config ######
+  ap:
+    ssid: "esp8266-dev-kit-template"
+    password: !secret ap_password
+  
+captive_portal:
+  
+
+
+
+###### 'Ports' Config ######
+
+### MAX31855 SPI ###
+spi:
+  miso_pin: D0
+  clk_pin: D1
+
+####### Sensors #######
+sensor:
+
+ ### MAX31855 K-Type Thermocouple Sensor (See SPI 'ports') ###
+  - platform: max31855
+    name: "Living Room Temperature"
+    cs_pin: D2
+    update_interval: 60s
+
+
+
+    ### Home Assistant Entities (through Native API) ###
+  - platform: homeassistant
+    id: home_assistant_entity_id
+    entity_id: sensor.entity
+#    attribute: current_power
+  
+
+
+
+###### Screen (If needed) ######
