@@ -1,0 +1,142 @@
+####################################################################################################
+##                                                                                                ##
+##              .:                                                                                ##
+##            :J#&5^                                                                              ##
+##         :Y&@@@@@P!5GP:       ___ ___ ___ _  _                   ___        _                   ##
+##       ^5&@@@@@@@@@@@@^      | __/ __| _ \ || |___ _ __  ___ ___| _ \___ __(_)_ __  ___ ___     ##
+##      ~P@@@@@@@@@@@@@@@J.    | _|\__ \  _/ __ / _ \ '  \/ -_)___|   / -_) _| | '_ \/ -_|_-<     ##
+##    .P@@@@@@@@@@@@@@@@@@#~   |___|___/_| |_||_\___/_|_|_\___|   |_|_\___\__|_| .__/\___/__/     ##
+##     ::B@@@@@@@@@@@@@@@!:.    Ready to use ESP32/8266 Templates for ESPHome  |_|                ##
+##       B@@@@@@@@@@@@@@@^                                                                        ##
+##       G@&&&&&&&&&&&&&&^      Board:   Sonoff S31 (ESP8266)                                     ##
+##       .::::::::::::::.       Version: 1.0                                                      ##
+##                              Notes:                                                            ##
+####################################################################################################
+
+###### Device info ######
+substitutions:
+  friendly_name: Medidor multiusos
+  project_name: SonoffS31
+  device_name: sonoff-s31-template
+  author: JuanZagoR
+  latest_rev: 2024.05.07
+  channel_rev: RC
+  dev_rev: "1"
+  comment: Medidor de energía multipropósito
+  reboot_timeout: !secret reboot_timeout
+  
+  update_interval: 100ms
+  throttle_average: 100ms
+
+
+
+  ##### ESPHome #####
+esphome:
+  name: $device_name
+  comment: $comment
+  friendly_name: $friendly_name
+  name_add_mac_suffix: false
+
+   ### Project info ###  
+  project:
+    name: $author.$project_name
+    version: $latest_rev - $channel_rev $dev_rev  
+
+###### Dev board and platform ######
+esp8266:
+  board: esp01_1m
+  restore_from_flash: true
+  
+###### Data logger ######
+logger:
+  level: INFO
+  baud_rate: 0
+  
+###### Home Assistant's Native API Config ######
+api: !include Common/api-config.yaml
+  
+###### MQTT Broker Config ######
+#mqtt: !include Common/mqtt-config.yaml
+
+###### Over-the-Air Updates ######
+ota: !include Common/ota-config.yaml
+
+###### Network Config ######
+wifi:
+  networks: !include Common/wifi-config.yaml
+
+  #### Static IP Address ####
+#  manual_ip:
+#    static_ip: 192.168.180.15
+#    gateway: !secret network_gateway
+#    subnet: !secret network_subnet
+#    dns1: !secret network_dns1
+#    dns2: !secret network_dns2
+  
+  #### Other settings ####
+#  fast_connect: on
+  power_save_mode: none
+  reboot_timeout: $reboot_timeout   
+
+###### Access Point Config ######
+  ap: !include Common/ap-config.yaml
+
+
+###### Web server and Captive Portal config ######
+#web_server: !include Common/web_server-config.yaml
+captive_portal:
+
+
+###### Time component ######
+time:
+  - <<: !include Common/Components/time-sntp.yaml
+
+###### 'Ports' Config ######
+uart:
+  - <<: !include Common/Components/uart_cse7766.yaml
+
+###### Status lights ######
+status_led:
+  pin:
+    number: GPIO13
+    inverted: True
+  id: led_estado
+
+####### Sensors #######
+sensor:
+ ###### Common sensors ######
+  - <<: !include Common/Sensor/wifi_signal-sensor.yaml
+  - <<: !include Common/Sensor/uptime-sensor.yaml
+
+ ###### Sonoff S31 components ######
+  - <<: !include Common/Components/cse7766-sensor.yaml
+
+
+
+text_sensor:
+ ###### Common text sensors ######
+  - <<: !include Common/Sensor/wifi_info-sensor.yaml
+
+
+
+binary_sensor:
+ ###### Common binary sensors ######
+  - <<: !include Common/Sensor/status-sensor.yaml
+
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Botón"
+    on_press:
+      - switch.toggle: relay
+
+
+###### Switches/Relays ######
+switch:
+  - platform: gpio
+    name: "Interruptor"
+    pin: GPIO12
+    id: relay
+    restore_mode: RESTORE_DEFAULT_OFF
