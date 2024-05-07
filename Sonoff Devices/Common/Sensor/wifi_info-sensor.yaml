@@ -1,0 +1,11 @@
+  - platform: wifi_info
+    ip_address:
+      name: "IP"
+    ssid:
+      name: "SSID"
+    bssid:
+      name: "BSSID"
+    mac_address:
+      name: "MAC"
+    scan_results:
+      name: "Redes cercanas"

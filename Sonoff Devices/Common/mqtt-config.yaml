@@ -1,0 +1,8 @@
+  discovery: false
+  broker: !secret mqtt_broker
+  port: !secret mqtt_brokerport
+  keepalive: 15s
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  discovery_prefix: !secret mqtt_discoveryprefix
+  reboot_timeout: $reboot_timeout

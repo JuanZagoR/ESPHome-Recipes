@@ -1,0 +1,9 @@
+    name: $device_name
+    comment: $comment
+    friendly_name: $friendly_name
+    name_add_mac_suffix: false
+  
+     ### Project info ###  
+    project:
+     name: $author.$project_name
+     version: $latest_rev - $channel_rev $dev_rev

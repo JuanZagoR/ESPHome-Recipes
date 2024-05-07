@@ -1,0 +1,8 @@
+  port: 80
+  local: true
+  auth:
+    username: !secret webserver_username
+    password: !secret webserver_password
+  include_internal: true
+  ota: true
+  version: 2

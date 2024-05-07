@@ -1,0 +1,18 @@
+
+    - ssid: !secret wifi_ssid
+#      bssid: !secret wifi_bssid
+      password: !secret wifi_password
+      hidden: false
+      priority: 100
+  
+    - ssid: !secret wifi_ssid2
+      #bssid: !secret wifi_bssid2
+      password: !secret wifi_password2
+      hidden: false
+      priority: 75
+  
+    - ssid: !secret wifi_ssid3
+      #bssid: !secret wifi_bssid3
+      password: !secret wifi_password3
+      hidden: false
+      priority: 50

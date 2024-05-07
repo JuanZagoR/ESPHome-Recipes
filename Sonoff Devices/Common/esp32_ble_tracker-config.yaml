@@ -1,0 +1,7 @@
+  scan_parameters:
+    interval: 160ms
+    window: 60ms
+#    duration: 5s
+    active: true
+    continuous: true
+  id: bletracker

@@ -1,0 +1,4 @@
+  - platform: total_daily_energy
+    name: "Consumo diario"
+    power_id: consumo
+    id: consumodiario

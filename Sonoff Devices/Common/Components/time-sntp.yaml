@@ -1,0 +1,4 @@
+  - platform: sntp
+    id: reloj
+    servers:
+      - !secret homeassistant_ip

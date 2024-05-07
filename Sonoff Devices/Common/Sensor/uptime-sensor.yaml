@@ -1,0 +1,6 @@
+  - platform: uptime
+    name: Uptime
+    filters:
+       - lambda: return x / 3600;
+    unit_of_measurement: "hours"
+    accuracy_decimals: 2

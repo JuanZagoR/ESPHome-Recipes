@@ -1,0 +1,35 @@
+  - platform: cse7766
+    current:
+      name: "Corriente"
+      accuracy_decimals: 2
+      id: corriente
+      filters:
+        - throttle_average: $throttle_average
+
+    voltage:
+      name: "Tensión"
+      accuracy_decimals: 2
+      id: tension
+      filters:
+        - throttle_average: $throttle_average
+
+    power:
+      name: "Consumo"
+      accuracy_decimals: 2
+      id: consumo
+      filters:
+        - throttle_average: $throttle_average
+    
+    apparent_power:
+      name: "Potencia aparente"
+      accuracy_decimals: 2
+      id: potencia_aparente
+      filters:
+        - throttle_average: $throttle_average
+    
+    power_factor:
+      name: "Factor de potencia"
+      accuracy_decimals: 2
+      id: factor_potencia
+      filters:
+        - throttle_average: $throttle_average

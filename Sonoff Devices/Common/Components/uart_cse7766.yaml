@@ -1,0 +1,6 @@
+  id: uart_cse
+  rx_pin: RX
+  baud_rate: 4800
+  data_bits: 8
+  parity: NONE
+  stop_bits: 1

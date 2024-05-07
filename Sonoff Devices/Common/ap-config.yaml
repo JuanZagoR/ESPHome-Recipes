@@ -1,0 +1,2 @@
+        ssid: $device_name
+        password: !secret ap_password
